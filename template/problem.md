@@ -35,11 +35,10 @@ class Solution:
 ## Complexity Analysis:
 ```
 * Time complexity:   O(n)
-* Space complexity:  O(n) for Iterative O(1) for Kadane's
+* Space complexity:  O(n)
 ```
 
 ## Notes: 
-- memoize sum of max subarray in [0:i] including element i for each element
-- Kadane's algorithm has better space complexity
+- 
 
 <br><br>
