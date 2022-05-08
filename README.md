@@ -12,6 +12,8 @@ https://seanprashad.com/leetcode-patterns/
 - [Easy](#easy-problems)
     - [Arrays](#arrays)
         - [217 - Contains Duplicate](#217---contains-duplicate)
+    - [Linked List](#linked-list)
+        - [206 - Reverse Linked List](#206---reverse-linked-list)
     - [DP](#dp)
         - [53 - Maximum Subarray](#53---maximum-subarray)
         - [70 - Climbing Stairs](#70---climbing-stairs)
@@ -56,6 +58,114 @@ class Solution:
 * Time complexity:   O(n)
 * Space complexity:  O(n)
 ```
+
+
+<br><br>
+## Linked List
+***
+<br>
+
+
+# [141](https://leetcode.com/problems/linked-list-cycle/) - Linked List Cycle
+
+Given head, the head of a linked list, determine if the linked list has a cycle in it.
+
+
+## Solution:
+**Brute Force**
+```python
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        if head is None or head.next is None:
+            return False
+        
+        record = set()
+        record.add(head)
+        curr = head
+        
+        while curr.next:
+            if curr.next in record:
+                return True
+            curr = curr.next
+            record.add(curr)
+        return False
+```
+**Floyd's Cycle Finding Algorithm**
+```python
+class Solution:
+    def hasCycle(self, head: Optional[ListNode]) -> bool:
+        fast = slow = head
+        while fast and fast.next:
+            slow, fast = slow.next, fast.next.next
+            if fast == slow:
+                return True
+        return False
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n) or O(1) for Floyd's
+```
+
+## Notes: 
+- aka Hare-Tortoise algorithm
+- fast and slow pointers are bound to overlap as they repeat cycle until eventually overlapping
+
+<br><br>
+
+# [206](https://leetcode.com/problems/reverse-linked-list/) - Reverse Linked List
+
+Given the head of a linked list return the reverse linked list. 
+
+
+## Solution:
+**Iterative**
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is  None or head.next is None:
+            return head
+        
+        nxt = None
+        prev = head
+        curr = head.next
+        prev.next = None
+        
+        while curr:
+            nxt = curr.next
+            curr.next = prev
+            prev = curr
+            curr = nxt
+        
+        return prev
+```
+**Recursive**
+```python
+class Solution:
+    def reverseList(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if head is None or head.next is None:
+            return head
+
+        prev = self.reverseList(head.next)
+        head.next.next = head
+        head.next = None
+
+        return prev
+```
+
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+## Notes: 
+- remember to set new tail's next to be `None`
+
+
+
 
 <br><br>
 ## DP
