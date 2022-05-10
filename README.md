@@ -11,7 +11,11 @@ https://seanprashad.com/leetcode-patterns/
     - [Source](#source)
 - [Easy](#easy-problems)
     - [Arrays](#arrays)
+        - [1 - Two Sum](#1---two-sum)
+        - [167 - Two Sum II](#167---two-sum-ii)
+        - [15 - 3Sum](#15---3sum)
         - [217 - Contains Duplicate](#217---contains-duplicate)
+        - [2022 - Convert 1D Array Into 2D Array](#2022---convert-1d-array-into-2d-array)
     - [Linked List](#linked-list)
         - [206 - Reverse Linked List](#206---reverse-linked-list)
     - [DP](#dp)
@@ -34,6 +38,104 @@ https://seanprashad.com/leetcode-patterns/
 ***
 <br>
 
+# [1](https://leetcode.com/problems/two-sum/) - Two Sum
+
+Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+
+## Solution:
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        record = {}
+        
+        for i in range(len(nums)):
+            need = target - nums[i]
+            if need in record:
+                return [i, record[need]]
+            else:
+                record[nums[i]] = i
+        return
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n)
+```
+
+## Notes:
+- use HashMap 
+
+
+<br><br>
+
+# [167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) - Two Sum II
+
+Given a 1-indexed, non-ascending array of integers and a target, return indices of the two numbers such that they add up to target.
+
+
+## Solution:
+```python
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        i, j = 0, len(numbers) - 1
+        
+        while i < len(numbers) and j >= 0:
+            sum = numbers[i] + numbers[j]
+            if sum == target:
+                return [i + 1, j + 1]
+            elif sum < target:
+                i += 1
+            else:
+                j -= 1
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+## Notes:
+- use two pointers 
+
+
+<br><br>
+
+# [15](https://leetcode.com/problems/3sum/) - 3Sum
+
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+
+## Solution:
+```python
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        record = {}
+        
+        for i in range(len(nums)):
+            need = target - nums[i]
+            if need in record:
+                return [i, record[need]]
+            else:
+                record[nums[i]] = i
+        return
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n)
+```
+
+## Notes:
+- use HashMap 
+
+
+<br><br>
+
+
 # [217](https://leetcode.com/problems/contains-duplicate/) - Contains Duplicate
 
 Return true if there is a duplicate value in array
@@ -52,6 +154,37 @@ class Solution:
         return False
 ```
 
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n)
+```
+
+<br><br>
+
+# [2022](https://leetcode.com/problems/convert-1d-array-into-2d-array/) - Convert 1D Array Into 2D Array
+
+Convert 1D array into 2D array of dimension m by n. 
+
+
+## Solution:
+```python
+class Solution:
+    def construct2DArray(self, original: List[int], m: int, n: int) -> List[List[int]]:
+        if len(original) != m * n:
+            return []
+        else:
+            mat = []
+            
+            j = 0
+            for i in range(m):
+                row = original[j:j + n]
+                mat.append(row)
+                j += n
+                
+            return mat
+```
 
 ## Complexity Analysis:
 ```
