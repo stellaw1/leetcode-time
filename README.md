@@ -81,7 +81,7 @@ class Solution:
     def twoSum(self, numbers: List[int], target: int) -> List[int]:
         i, j = 0, len(numbers) - 1
         
-        while i < len(numbers) and j >= 0:
+        while j > i:
             sum = numbers[i] + numbers[j]
             if sum == target:
                 return [i + 1, j + 1]
@@ -111,26 +111,49 @@ Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]]
 ## Solution:
 ```python
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
-        record = {}
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        n = len(nums)
+        ret = []
         
-        for i in range(len(nums)):
-            need = target - nums[i]
-            if need in record:
-                return [i, record[need]]
+        for i in range(n - 2):
+            # check if duplicate
+            if i != 0 and nums[i] == nums[i - 1]:
+                continue
+            # break when positive number is reached
+            elif nums[i] > 0:
+                break
+            # find second and third element like in two sum II
             else:
-                record[nums[i]] = i
-        return
+                l = i + 1
+                r = n - 1
+                
+                while r > l:
+                    sum = nums[l] + nums[r]
+                    if sum == -nums[i]:
+                        ret.append([nums[i], nums[l], nums[r]])
+                        
+                    if sum <= -nums[i]:
+                        l += 1
+                        while nums[l - 1] == nums[l] and l < r:
+                            l += 1
+                    if sum >= -nums[i]:
+                        r -= 1
+                        while nums[r + 1] == nums[r] and l < r:
+                            r -= 1
+                        
+        return ret
 ```
 
 ## Complexity Analysis:
 ```
-* Time complexity:   O(n)
-* Space complexity:  O(n)
+* Time complexity:   O(n^2)
+* Space complexity:  O(1)
 ```
 
 ## Notes:
-- use HashMap 
+- sort array to avoid duplicate and can terminate early upon reaching positive element
+- finding second and third element in triplet reduces to two sum II
 
 
 <br><br>
