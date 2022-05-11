@@ -12,13 +12,17 @@ https://seanprashad.com/leetcode-patterns/
 - [Easy](#easy-problems)
     - [Arrays](#arrays)
         - [1 - Two Sum](#1---two-sum)
+        - [136 - Single Number](#136---single-number)
         - [217 - Contains Duplicate](#217---contains-duplicate)
+        - [268 - Missing Number](#268---missing-number)
+        - [448 - Find All Numbers Disappeared in an Array](#448---find-all-numbers-disappeared-in-an-array)
         - [2022 - Convert 1D Array Into 2D Array](#2022---convert-1d-array-into-2d-array)
     - [Linked List](#linked-list)
         - [206 - Reverse Linked List](#206---reverse-linked-list)
     - [DP](#dp)
         - [53 - Maximum Subarray](#53---maximum-subarray)
         - [70 - Climbing Stairs](#70---climbing-stairs)
+        - [121 - Best Time to Buy and Sell Stock](#121---best-time-to-buy-and-sell-stock)
         - [338 - Counting Bits](#338---counting-bits)
     - [Trees](#trees)
         - [100 - Same Tree](#100---same-tree)
@@ -70,6 +74,32 @@ class Solution:
 
 <br><br>
 
+# [136](https://leetcode.com/problems/single-number/) - Single Number
+
+Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+
+
+## Solution:
+```python
+class Solution:
+    def singleNumber(self, nums: List[int]) -> int:
+        ret = 0
+        
+        for n in nums:
+            ret = ret ^ n
+            
+        return ret
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+
+<br><br>
+
 
 # [217](https://leetcode.com/problems/contains-duplicate/) - Contains Duplicate
 
@@ -95,6 +125,67 @@ class Solution:
 * Time complexity:   O(n)
 * Space complexity:  O(n)
 ```
+
+<br><br>
+
+
+# [268](https://leetcode.com/problems/missing-number/) - Missing Number
+
+Given an array nums containing n distinct numbers in the range [0, n], return the only number in the range that is missing from the array.
+
+
+## Solution:
+```python
+class Solution:
+    def missingNumber(self, nums: List[int]) -> int:
+        tot = len(nums)
+        
+        for i, n in enumerate(nums):
+            tot += i - n
+        
+        return tot
+```
+
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+<br><br>
+
+
+# [448](https://leetcode.com/problems/find-all-numbers-disappeared-in-an-array/) - Find All Numbers Disappeared in an Array
+
+Given an array nums of n integers where nums[i] is in the range [1, n], return an array of all the integers in the range [1, n] that do not appear in nums.
+
+
+## Solution:
+```python
+class Solution:
+    def findDisappearedNumbers(self, nums: List[int]) -> List[int]:
+        ret = set()
+        
+        for i in range(1, len(nums) + 1):
+            ret.add(i)
+        
+        for n in nums:
+            if n in ret:
+                ret.remove(n)
+        
+        return list(ret)
+```
+
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+## Notes:
+- space complexity assumes returned list does not count as extra space
 
 <br><br>
 
@@ -236,7 +327,6 @@ class Solution:
 
 
 
-
 <br><br>
 ## DP
 ***
@@ -332,6 +422,37 @@ class Solution:
 - Fibonacci
 
 <br><br>
+
+
+
+# [121](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/) - Best Time to Buy and Sell Stock
+
+Given an array of stock prices on different days, return the max profit from buying on a single day and selling in a future day. 
+
+
+## Solution:
+```python
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        minPrice = prices[0]
+        maxProfit = 0
+        
+        for i in range(1, len(prices)):
+            maxProfit = max(maxProfit, prices[i] - minPrice)
+            minPrice = min(minPrice, prices[i])
+        
+        return maxProfit
+```
+
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n) for Iterative O(1) for Kadane's
+```
+
+<br><br>
+
 
 # [338](https://leetcode.com/problems/counting-bits/) - Counting Bits
 
