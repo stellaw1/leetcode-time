@@ -12,8 +12,6 @@ https://seanprashad.com/leetcode-patterns/
 - [Easy](#easy-problems)
     - [Arrays](#arrays)
         - [1 - Two Sum](#1---two-sum)
-        - [167 - Two Sum II](#167---two-sum-ii)
-        - [15 - 3Sum](#15---3sum)
         - [217 - Contains Duplicate](#217---contains-duplicate)
         - [2022 - Convert 1D Array Into 2D Array](#2022---convert-1d-array-into-2d-array)
     - [Linked List](#linked-list)
@@ -25,7 +23,9 @@ https://seanprashad.com/leetcode-patterns/
     - [Trees](#trees)
         - [100 - Same Tree](#100---same-tree)
 - [Medium](#medium-problems)
-    - [53 - Climbing Stairs](#53---maximum-subarray)
+    - [Arrays](#arrays)
+        - [15 - 3Sum](#15---3sum)
+        - [167 - Two Sum II](#167---two-sum-ii)
 - [Hard](#hard-problems)
     - [53 - Climbing Stairs](#53---maximum-subarray)
 
@@ -66,94 +66,6 @@ class Solution:
 
 ## Notes:
 - use HashMap 
-
-
-<br><br>
-
-# [167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) - Two Sum II
-
-Given a 1-indexed, non-ascending array of integers and a target, return indices of the two numbers such that they add up to target.
-
-
-## Solution:
-```python
-class Solution:
-    def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        i, j = 0, len(numbers) - 1
-        
-        while j > i:
-            sum = numbers[i] + numbers[j]
-            if sum == target:
-                return [i + 1, j + 1]
-            elif sum < target:
-                i += 1
-            else:
-                j -= 1
-```
-
-## Complexity Analysis:
-```
-* Time complexity:   O(n)
-* Space complexity:  O(1)
-```
-
-## Notes:
-- use two pointers 
-
-
-<br><br>
-
-# [15](https://leetcode.com/problems/3sum/) - 3Sum
-
-Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
-
-
-## Solution:
-```python
-class Solution:
-    def threeSum(self, nums: List[int]) -> List[List[int]]:
-        nums.sort()
-        n = len(nums)
-        ret = []
-        
-        for i in range(n - 2):
-            # check if duplicate
-            if i != 0 and nums[i] == nums[i - 1]:
-                continue
-            # break when positive number is reached
-            elif nums[i] > 0:
-                break
-            # find second and third element like in two sum II
-            else:
-                l = i + 1
-                r = n - 1
-                
-                while r > l:
-                    sum = nums[l] + nums[r]
-                    if sum == -nums[i]:
-                        ret.append([nums[i], nums[l], nums[r]])
-                        
-                    if sum <= -nums[i]:
-                        l += 1
-                        while nums[l - 1] == nums[l] and l < r:
-                            l += 1
-                    if sum >= -nums[i]:
-                        r -= 1
-                        while nums[r + 1] == nums[r] and l < r:
-                            r -= 1
-                        
-        return ret
-```
-
-## Complexity Analysis:
-```
-* Time complexity:   O(n^2)
-* Space complexity:  O(1)
-```
-
-## Notes:
-- sort array to avoid duplicate and can terminate early upon reaching positive element
-- finding second and third element in triplet reduces to two sum II
 
 
 <br><br>
@@ -571,13 +483,101 @@ class Solution:
 ## Notes:
 - **diameter**: length of the longest path between any two nodes in a tree (may or may not pass through the root)
 
-<br><br>
-
 
 <br><br><br>
 # Medium problems
 
+## Arrays
+***
+<br>
 
+# [167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) - Two Sum II
+
+Given a 1-indexed, non-ascending array of integers and a target, return indices of the two numbers such that they add up to target.
+
+
+## Solution:
+```python
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        i, j = 0, len(numbers) - 1
+        
+        while j > i:
+            sum = numbers[i] + numbers[j]
+            if sum == target:
+                return [i + 1, j + 1]
+            elif sum < target:
+                i += 1
+            else:
+                j -= 1
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+## Notes:
+- use two pointers 
+
+
+<br><br>
+
+# [15](https://leetcode.com/problems/3sum/) - 3Sum
+
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+
+## Solution:
+```python
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums.sort()
+        n = len(nums)
+        ret = []
+        
+        for i in range(n - 2):
+            # check if duplicate
+            if i != 0 and nums[i] == nums[i - 1]:
+                continue
+            # break when positive number is reached
+            elif nums[i] > 0:
+                break
+            # find second and third element like in two sum II
+            else:
+                l = i + 1
+                r = n - 1
+                
+                while r > l:
+                    sum = nums[l] + nums[r]
+                    if sum == -nums[i]:
+                        ret.append([nums[i], nums[l], nums[r]])
+                        
+                    if sum <= -nums[i]:
+                        l += 1
+                        while nums[l - 1] == nums[l] and l < r:
+                            l += 1
+                    if sum >= -nums[i]:
+                        r -= 1
+                        while nums[r + 1] == nums[r] and l < r:
+                            r -= 1
+                        
+        return ret
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n^2)
+* Space complexity:  O(1)
+```
+
+## Notes:
+- sort array to avoid duplicate and can terminate early upon reaching positive element
+- finding second and third element in triplet reduces to two sum II
+
+
+<br><br>
 
 
 # Hard problems
