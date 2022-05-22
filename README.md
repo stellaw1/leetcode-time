@@ -18,6 +18,8 @@ https://seanprashad.com/leetcode-patterns/
         - [448 - Find All Numbers Disappeared in an Array](#448---find-all-numbers-disappeared-in-an-array)
         - [2022 - Convert 1D Array Into 2D Array](#2022---convert-1d-array-into-2d-array)
     - [Linked List](#linked-list)
+        - [21 - Merge Two Sorted Lists](#21---merge-two-sorted-lists)
+        - [141 - Linked List Cycle](#141---linked-list-cycle)
         - [206 - Reverse Linked List](#206---reverse-linked-list)
     - [DP](#dp)
         - [53 - Maximum Subarray](#53---maximum-subarray)
@@ -223,6 +225,63 @@ class Solution:
 ## Linked List
 ***
 <br>
+
+
+# [21](https://leetcode.com/problems/merge-two-sorted-lists/) - Merge Two Sorted Lists
+
+Given the heads, merge two sorted linked lists
+
+
+## Solution:
+**Brute Force**
+```python
+class Solution:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+        if not list1:
+            return list2
+        if not list2:
+            return list1
+        
+        l1 = list1
+        l2 = list2
+        prev, head = None, None
+        
+        if l1.val < l2.val:
+            head = l1
+            prev = l1
+            l1 = l1.next
+        else:
+            head = l2
+            prev = l2
+            l2 = l2.next
+        
+        while l1 and l2:
+            if l1.val < l2.val:
+                prev.next = l1
+                prev = l1
+                l1 = l1.next
+            else:
+                prev.next = l2
+                prev = l2
+                l2 = l2.next
+        
+        if l1:
+            prev.next = l1
+        
+        if l2: 
+            prev.next = l2
+            
+        return head
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+
+<br><br>
 
 
 # [141](https://leetcode.com/problems/linked-list-cycle/) - Linked List Cycle
