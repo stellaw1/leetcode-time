@@ -31,7 +31,10 @@ https://seanprashad.com/leetcode-patterns/
 - [Medium](#medium-problems)
     - [Arrays](#arrays)
         - [15 - 3Sum](#15---3sum)
+        - [48 - Rotate Image](#48---rotate-image)
         - [167 - Two Sum II](#167---two-sum-ii)
+    - [Strings](#strings)
+        - [17 - Letter Combinations of a Phone Number](#17---letter-combinations-of-a-phone-number)
 - [Hard](#hard-problems)
     - [53 - Climbing Stairs](#53---maximum-subarray)
 
@@ -671,38 +674,6 @@ class Solution:
 ***
 <br>
 
-# [167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) - Two Sum II
-
-Given a 1-indexed, non-ascending array of integers and a target, return indices of the two numbers such that they add up to target.
-
-
-## Solution:
-```python
-class Solution:
-    def twoSum(self, numbers: List[int], target: int) -> List[int]:
-        i, j = 0, len(numbers) - 1
-        
-        while j > i:
-            sum = numbers[i] + numbers[j]
-            if sum == target:
-                return [i + 1, j + 1]
-            elif sum < target:
-                i += 1
-            else:
-                j -= 1
-```
-
-## Complexity Analysis:
-```
-* Time complexity:   O(n)
-* Space complexity:  O(1)
-```
-
-## Notes:
-- use two pointers 
-
-
-<br><br>
 
 # [15](https://leetcode.com/problems/3sum/) - 3Sum
 
@@ -755,6 +726,133 @@ class Solution:
 ## Notes:
 - sort array to avoid duplicate and can terminate early upon reaching positive element
 - finding second and third element in triplet reduces to two sum II
+
+
+<br><br>
+
+# [48](https://leetcode.com/problems/rotate-image/) - Rotate Image
+
+Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0.
+
+
+## Solution:
+```python
+class Solution:
+    def rotate(self, matrix: List[List[int]]) -> None:
+        """
+        Do not return anything, modify matrix in-place instead.
+        """
+        
+        n = len(matrix)
+        
+        for s in range(floor(n/2)):
+            offset = 0
+            for c in range(n - 1 - 2 * s):
+                save = matrix[s][s + offset]
+
+                # TL
+                matrix[s][s + offset] = matrix[n - s - 1 - offset][s]
+                # BL
+                matrix[n - s - 1 - offset][s] = matrix[n - s - 1][n - s - 1 - offset]
+                # BR
+                matrix[n - s - 1][n - s - 1 - offset] = matrix[s + offset][n - s - 1]
+                # TR
+                matrix[s + offset][n - s - 1] = save
+
+                offset += 1
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+## Notes:
+- `A[:] = zip(*A[::-1])`
+
+
+<br><br>
+
+# [167](https://leetcode.com/problems/two-sum-ii-input-array-is-sorted/) - Two Sum II
+
+Given a 1-indexed, non-ascending array of integers and a target, return indices of the two numbers such that they add up to target.
+
+
+## Solution:
+```python
+class Solution:
+    def twoSum(self, numbers: List[int], target: int) -> List[int]:
+        i, j = 0, len(numbers) - 1
+        
+        while j > i:
+            sum = numbers[i] + numbers[j]
+            if sum == target:
+                return [i + 1, j + 1]
+            elif sum < target:
+                i += 1
+            else:
+                j -= 1
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
+
+## Notes:
+- use two pointers 
+
+<br><br>
+
+
+## Strings
+***
+<br>
+
+# [17](https://leetcode.com/problems/letter-combinations-of-a-phone-number/) - Letter Combinations of a Phone Number
+
+Given a string containing digits from 2-9 inclusive, return all possible letter combinations that the number could represent.
+
+
+## Solution:
+```python
+class Solution:
+    def letterCombinations(self, digits: str) -> List[str]:
+        mapping = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz",
+        }
+        
+        ret = []
+        
+        def helper(i, s):
+            if len(digits) == len(s):
+                ret.append(s)
+                
+            else: 
+                curr = mapping.get(digits[i])
+                for c in curr:
+                    helper(i + 1, s + c)
+        
+        if digits:
+            helper(0, "")
+            
+        return ret
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(1)
+```
 
 
 <br><br>
