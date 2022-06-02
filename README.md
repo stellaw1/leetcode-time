@@ -32,6 +32,8 @@ https://seanprashad.com/leetcode-patterns/
     - [Arrays](#arrays)
         - [15 - 3Sum](#15---3sum)
         - [48 - Rotate Image](#48---rotate-image)
+        - [49 - Group Anagrams](#49---group-anagrams)
+        - [78 - Subsets](#78---subsets)
         - [167 - Two Sum II](#167---two-sum-ii)
     - [Strings](#strings)
         - [17 - Letter Combinations of a Phone Number](#17---letter-combinations-of-a-phone-number)
@@ -770,6 +772,75 @@ class Solution:
 
 ## Notes:
 - `A[:] = zip(*A[::-1])`
+
+
+<br><br>
+
+# [49](https://leetcode.com/problems/group-anagrams/) - Group Anagrams
+
+Given an array of strings strs, group the anagrams together. 
+
+
+## Solution:
+```python
+class Solution:
+    def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        hist = {}
+        
+        for word in strs:
+            w = ''.join(sorted(word))
+            if w in hist:
+                hist[w].append(word)
+            else:
+                hist[w] = [word]
+        
+        ret = []
+        for w in hist:
+            ret.append(hist[w])
+            
+        return ret
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(kn) with k = time to sort length of longest string
+* Space complexity:  O(n)
+```
+
+
+<br><br>
+
+# [78](https://leetcode.com/problems/subsets/) - Subsets
+
+Given an integer array nums of unique elements, return all possible subsets (the power set).
+
+
+## Solution:
+```python
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        ps = [[]]
+        
+        for n in nums:
+            cps = ps[:]
+            for c in cps: 
+                ps.append(c[:] + [n])
+        
+        return ps
+```
+### Backtracking: 
+```python
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        # TODO
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n * 2^n)
+* Space complexity:  O(n * 2^n) or O(n)
+```
+
 
 
 <br><br>
