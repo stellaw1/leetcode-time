@@ -929,4 +929,63 @@ class Solution:
 <br><br>
 
 
+## Trees
+***
+<br>
+
+# [105](https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/) - Construct Binary Tree from Preorder and Inorder Traversal
+
+Given two integer arrays preorder and inorder where preorder is the preorder traversal of a binary tree and inorder is the inorder traversal of the same tree, construct and return the binary tree.
+
+
+## Solution:
+```java
+class Solution {
+    Map<Integer, Integer> rootIndex;
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        rootIndex = new HashMap<Integer, Integer>();
+        
+        for (int i = 0; i < inorder.length; i++) {
+            rootIndex.put(inorder[i], i);
+        }
+        
+        return helper(preorder, inorder);
+    }
+    
+    private TreeNode helper(int[] preorder, int[] inorder) {
+        if (preorder.length <= 0) {
+            return null;
+        }
+        
+        TreeNode curr = new TreeNode(preorder[0]);
+        
+        int ind = rootIndex.get(preorder[0]);
+        
+        int[] leftIn = Arrays.copyOfRange(inorder, 0, ind);
+        int[] rightIn = Arrays.copyOfRange(inorder, ind + 1, inorder.length);
+
+        int[] leftPre = Arrays.copyOfRange(preorder, 1, ind + 1);
+        int[] rightPre = Arrays.copyOfRange(preorder, ind + 1, preorder.length);
+
+        curr.left = buildTree(leftPre, leftIn);
+        curr.right = buildTree(rightPre, rightIn);
+        
+        return curr;
+    }
+}
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n)
+```
+
+## Notes
+- Build a hashmap to record the relation of value -> index for inorder, so that we can find the position of root in constant time.
+
+
+<br><br>
+
+
 # Hard problems
