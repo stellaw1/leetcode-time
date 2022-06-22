@@ -37,6 +37,8 @@ https://seanprashad.com/leetcode-patterns/
         - [167 - Two Sum II](#167---two-sum-ii)
     - [Strings](#strings)
         - [17 - Letter Combinations of a Phone Number](#17---letter-combinations-of-a-phone-number)
+    - [Linked Lists](#linked-lists)
+        - [143 - Reorder List](#143---reorder-list)
 - [Hard](#hard-problems)
     - [53 - Climbing Stairs](#53---maximum-subarray)
 
@@ -923,6 +925,59 @@ class Solution:
 ```
 * Time complexity:   O(n)
 * Space complexity:  O(1)
+```
+
+
+<br><br>
+
+## Linked Lists
+***
+<br>
+
+# [143](https://leetcode.com/problems/reorder-list/submissions/) - Reorder List
+
+Alternatingly reverse the linked list nodes. 
+
+
+## Solution:
+```java
+class Solution {
+    public void reorderList(ListNode head) {
+        Stack<ListNode> myStack = new Stack<ListNode>();
+        
+        ListNode curr = head;
+        int count = 0;
+        while(curr != null) {
+            count++;
+            myStack.push(curr);
+            curr = curr.next;
+        }
+        
+        curr = head;
+        ListNode next = new ListNode();
+        
+        while (count > 1) {
+            count -= 2;
+            
+            next = curr.next;
+            curr.next = myStack.pop();
+            curr.next.next = next;
+            curr = next;
+        }
+        
+        if (count == 1) {
+            curr.next = null;
+        } else {
+            curr.next.next = null;
+        }
+    }
+}
+```
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n)
 ```
 
 
