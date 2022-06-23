@@ -3,7 +3,8 @@
 A compilation of notes for Leetcode problems I have worked on
 
 ## Source
-https://seanprashad.com/leetcode-patterns/
+https://seanprashad.com/leetcode-patterns/ <br>
+https://neetcode.io/
 
 
 ## Quick Access Links 
@@ -28,6 +29,9 @@ https://seanprashad.com/leetcode-patterns/
         - [338 - Counting Bits](#338---counting-bits)
     - [Trees](#trees)
         - [100 - Same Tree](#100---same-tree)
+        - [543 - Diameter of Binary Tree](#543---diameter-of-binary-tree)
+    - [Heap and PQs](#heap-and-pqs)
+        - [703 - Kth Largest Element in a Stream](#703---kth-largest-element-in-a-stream)
 - [Medium](#medium-problems)
     - [Arrays](#arrays)
         - [15 - 3Sum](#15---3sum)
@@ -670,6 +674,60 @@ class Solution:
 ## Notes:
 - **diameter**: length of the longest path between any two nodes in a tree (may or may not pass through the root)
 
+
+***
+<br><br>
+
+## Heap and PQs
+***
+<br>
+
+# [703](https://leetcode.com/problems/kth-largest-element-in-a-stream/submissions/) - Kth Largest Element in a Stream
+
+Find the kth largest element in a stream
+
+
+## Solution:
+```java
+class KthLargest {
+    
+    PriorityQueue<Integer> pq;
+    int k;
+
+    public KthLargest(int k, int[] nums) {
+        this.k = k;
+        this.pq = new PriorityQueue<>();
+        for (int n : nums) {
+            this.pq.add(n);
+        }
+        
+        // only keep k largest elements in pq
+        while (this.pq.size() > this.k) {
+            this.pq.poll();
+        }
+    }
+    
+    public int add(int val) {
+        this.pq.add(val);
+        
+        // only keep k largest elements in pq
+        while (this.pq.size() > this.k) {
+            this.pq.poll();
+        }
+        
+        return this.pq.peek();
+    }
+}
+```
+
+
+## Complexity Analysis:
+```
+* Time complexity:   O(n)
+* Space complexity:  O(n)
+```
+
+<br><br>
 
 <br><br><br>
 # Medium problems
